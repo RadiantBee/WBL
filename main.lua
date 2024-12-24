@@ -2,6 +2,7 @@ local ui = require("src/ui/ui")
 
 function love.load()
 	ui:load()
+	love.graphics.setBackgroundColor(0, 0.5, 0)
 end
 
 function love.mousepressed(x, y, mouseButton)

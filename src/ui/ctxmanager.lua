@@ -1,7 +1,9 @@
 require("src/ui/ctxmenu")
+
 local ctxManager = {}
 
-ctxManager[1] = BGCtxMenu()
+ctxManager[1] = FileToolbarMenu()
+ctxManager[2] = BGCtxMenu()
 
 ctxManager.active = nil
 
@@ -17,6 +19,8 @@ ctxManager.mousepressed = function(self, x, y, mousebutton)
 	else -- TODO: additional conditions for creating active ctx menus
 		if self[1]:invoke(x, y, mousebutton) then
 			self.active = 1
+		elseif self[2]:invoke(x, y, mousebutton) then
+			self.active = 2
 		end
 	end
 end

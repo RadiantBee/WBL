@@ -37,7 +37,8 @@ function TemplateCtxMenu(optionWidth, optionHeight)
 	end
 
 	ctx.outOfBounds = function(self, mouseX, mouseY)
-		return mouseX < self.x
+		return mouseY <= 20
+			or mouseX < self.x
 			or mouseX > self.x + self.optionWidth
 			or mouseY < self.y
 			or mouseY > self.y + self.optionHeight * #self.options
@@ -54,7 +55,18 @@ end
 
 function FileToolbarMenu()
 	local ctx = TemplateCtxMenu(100, 20)
+	ctx.x = 0
+	ctx.y = 20
 	ctx.options[1] = Button("New project", nil, nil, 0, 0, ctx.optionWidth, ctx.optionHeight)
 	ctx.options[2] = Button("Open project", nil, nil, 0, 0, ctx.optionWidth, ctx.optionHeight)
+	ctx.outOfBounds = function(self, mouseX, mouseY)
+		return mouseX > self.optionWidth or mouseY > self.optionHeight * (#self.options + 1)
+	end
+	ctx.invoke = function(self, mouseX, mouseY, mouseButton)
+		if mouseButton == 1 and mouseX < 100 and mouseY < 20 then
+			return true
+		end
+		return false
+	end
 	return ctx
 end

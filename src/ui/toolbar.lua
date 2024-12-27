@@ -1,4 +1,8 @@
+require("src/ui/dialogWindow")
 local Button = require("src/ui/button")
+
+local info = {}
+info[1] = "Info text"
 
 local toolbar = {}
 
@@ -7,12 +11,25 @@ toolbar.height = 20
 toolbar.width = 100
 toolbar.margin = 20
 
-toolbar.options[1] = Button("File", nil, nil, 0, 0, toolbar.width, toolbar.height)
+toolbar.popups = {}
+toolbar.popups[1] = CreateInfoWindow(100, 100, 100, info)
+toolbar.popups[2] = CreateBuildWindow(400, 100)
+toolbar.popups[3] = CreatePagesWindow(700, 100)
+toolbar.popups[4] = CreateResourcesWindow(100, 500)
+toolbar.popups[5] = CreateGitWindow(500, 500)
+
+toolbar.options[1] = Button("File", function() end, nil, 0, 0, toolbar.width, toolbar.height)
 toolbar.options[2] = Button("Save", nil, nil, 0, 0, toolbar.width, toolbar.height)
-toolbar.options[3] = Button("Build", nil, nil, 0, 0, toolbar.width, toolbar.height)
-toolbar.options[4] = Button("Pages", nil, nil, 0, 0, toolbar.width, toolbar.height)
-toolbar.options[5] = Button("Resources", nil, nil, 0, 0, toolbar.width, toolbar.height)
-toolbar.options[6] = Button("HELP ME", nil, nil, 0, 0, toolbar.width, toolbar.height)
+toolbar.options[3] =
+	Button("Build", toolbar.popups[2].toggleActive, toolbar.popups[2], 0, 0, toolbar.width, toolbar.height)
+toolbar.options[4] =
+	Button("Pages", toolbar.popups[3].toggleActive, toolbar.popups[3], 0, 0, toolbar.width, toolbar.height)
+toolbar.options[5] =
+	Button("Resources", toolbar.popups[4].toggleActive, toolbar.popups[4], 0, 0, toolbar.width, toolbar.height)
+toolbar.options[6] =
+	Button("Git", toolbar.popups[5].toggleActive, toolbar.popups[5], 0, 0, toolbar.width, toolbar.height)
+toolbar.options[7] =
+	Button("HELP ME", toolbar.popups[1].toggleActive, toolbar.popups[1], 0, 0, toolbar.width, toolbar.height)
 toolbar.draw = function(self, mouseX, mouseY)
 	love.graphics.setColor(0, 0, 0)
 	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), self.height)
@@ -21,6 +38,28 @@ toolbar.draw = function(self, mouseX, mouseY)
 
 	for index, option in ipairs(self.options) do
 		option:draw((index - 1) * self.width + (index - 1) * self.margin, 0, mouseX, mouseY, 2, 2)
+	end
+
+	for _, popup in ipairs(self.popups) do
+		popup:draw(mouseX, mouseY)
+	end
+end
+
+toolbar.update = function(self, mouseX, mouseY, mouseState)
+	for _, popup in ipairs(self.popups) do
+		if popup:checkMouseMove(mouseX, mouseY, mouseState) then
+			break
+		end
+	end
+end
+
+toolbar.onClick = function(self, mouseX, mouseY)
+	for _, option in ipairs(self.options) do
+		option:onClick(mouseX, mouseY)
+	end
+
+	for _, popup in ipairs(self.popups) do
+		popup:onClick(mouseX, mouseY)
 	end
 end
 return toolbar

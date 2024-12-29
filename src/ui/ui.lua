@@ -21,7 +21,7 @@ end
 ui.update = function(self, mouseX, mouseY)
 	self.mouseX = mouseX
 	self.mouseY = mouseY
-	ctxManager:manage(mouseX, mouseY)
+	ctxManager:manage(mouseX, mouseY, self.mouseState)
 	toolbar:update(mouseX, mouseY, self.mouseState)
 end
 

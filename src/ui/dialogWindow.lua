@@ -42,21 +42,20 @@ function EmptyDiaolgWindow(x, y, width, height)
 	end
 
 	emptyDiaolgWindow.bodyDraw = function(self, mouseX, mouseY)
-		if self.active then
-			love.graphics.setColor(0, 0, 0)
-			love.graphics.rectangle("fill", self.x, self.y, self.width, self.height + self.titleHeight)
-			love.graphics.setColor(1, 1, 1)
-			love.graphics.rectangle("line", self.x, self.y, self.width, self.height + self.titleHeight)
+		-- IMPORTANT: don't forget to check if popup is active before rendering
+		love.graphics.setColor(0, 0, 0)
+		love.graphics.rectangle("fill", self.x, self.y, self.width, self.height + self.titleHeight)
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("line", self.x, self.y, self.width, self.height + self.titleHeight)
 
-			love.graphics.setColor(0, 0, 0)
-			love.graphics.rectangle("fill", self.x, self.y, self.width, self.titleHeight)
-			love.graphics.setColor(1, 1, 1)
-			love.graphics.rectangle("line", self.x, self.y, self.width, self.titleHeight)
+		love.graphics.setColor(0, 0, 0)
+		love.graphics.rectangle("fill", self.x, self.y, self.width, self.titleHeight)
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("line", self.x, self.y, self.width, self.titleHeight)
 
-			love.graphics.print(self.title, self.x + 3, self.y + 3)
+		love.graphics.print(self.title, self.x + 3, self.y + 3)
 
-			self.exitButton:draw(self.x + self.width - self.exitButton.width, self.y, mouseX, mouseY, 5, 3)
-		end
+		self.exitButton:draw(self.x + self.width - self.exitButton.width, self.y, mouseX, mouseY, 5, 3)
 	end
 	return emptyDiaolgWindow
 end
@@ -69,82 +68,123 @@ function CreateInfoWindow(x, y, width, info)
 		infoWindow.info = infoWindow.info .. infoLine .. "\n"
 	end
 	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
 	return infoWindow
 end
+
 function CreateNewFileWindow(x, y)
-	local infoWindow = EmptyDiaolgWindow(x, y, 200, 100)
-	infoWindow.title = "New Project"
-	infoWindow.info = ""
-	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	local window = EmptyDiaolgWindow(x, y, 200, 100)
+	window.title = "New Project"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
-	return infoWindow
+	return window
 end
+
 function CreateOpenFileWindow(x, y)
-	local infoWindow = EmptyDiaolgWindow(x, y, 200, 100)
-	infoWindow.title = "Open Project"
-	infoWindow.info = ""
-	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	local window = EmptyDiaolgWindow(x, y, 200, 100)
+	window.title = "Open Project"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
-	return infoWindow
+	return window
 end
+
 function CreateBuildWindow(x, y)
-	local infoWindow = EmptyDiaolgWindow(x, y, 200, 100)
-	infoWindow.title = "Build Control"
-	infoWindow.info = ""
-	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	local window = EmptyDiaolgWindow(x, y, 200, 100)
+	window.title = "Build Control"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
-	return infoWindow
+	return window
 end
+
 function CreatePagesWindow(x, y)
-	local infoWindow = EmptyDiaolgWindow(x, y, 300, 200)
-	infoWindow.title = "Pages"
-	infoWindow.info = ""
-	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	local window = EmptyDiaolgWindow(x, y, 300, 200)
+	window.title = "Pages"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
-	return infoWindow
+	return window
 end
+
 function CreateResourcesWindow(x, y)
-	local infoWindow = EmptyDiaolgWindow(x, y, 300, 200)
-	infoWindow.title = "Resources"
-	infoWindow.info = ""
-	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	local window = EmptyDiaolgWindow(x, y, 300, 200)
+	window.title = "Resources"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
-	return infoWindow
+	return window
 end
+
 function CreateGitWindow(x, y)
-	local infoWindow = EmptyDiaolgWindow(x, y, 300, 200)
-	infoWindow.title = "Git Control"
-	infoWindow.info = ""
-	infoWindow.draw = function(self, mouseX, mouseY)
-		self:bodyDraw(mouseX, mouseY)
-		if self.active then
-			love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	local window = EmptyDiaolgWindow(x, y, 300, 200)
+	window.title = "Git Control"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
 		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
-	return infoWindow
+	return window
+end
+
+function CreateNewElementWindow(x, y)
+	local window = EmptyDiaolgWindow(x, y, 300, 200)
+	window.title = "New Element"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
+		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	end
+	return window
+end
+
+function CreateBackgroundSettings(x, y)
+	local window = EmptyDiaolgWindow(x, y, 300, 200)
+	window.title = "Background"
+	window.info = ""
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
+		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+	end
+	return window
 end

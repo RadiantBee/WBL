@@ -1,5 +1,6 @@
 # WBL
 ![WBL_LOGO](ico/wbl_webby.png)
+## What is it?
 An application for visually constructing a web-site (.html's, .css's and other stuff).
 Made in Lua using Love2d library.
 

@@ -20,6 +20,8 @@ function EmptyDiaolgWindow(x, y, width, height)
 		self.active = not self.active
 	end
 
+	emptyDiaolgWindow.keypressed = function(self, key) end
+
 	emptyDiaolgWindow.onClick = function(self, mouseX, mouseY)
 		if self.active then
 			self.exitButton:onClick(mouseX, mouseY)
@@ -78,15 +80,47 @@ function CreateInfoWindow(x, y, width, info)
 end
 
 function CreateNewFileWindow(x, y)
-	local window = EmptyDiaolgWindow(x, y, 200, 100)
+	local window = EmptyDiaolgWindow(x, y, 400, 200)
 	window.title = "New Project"
-	window.info = ""
+	window.nameInfo = "New project name:"
+	window.nameEntry = entry(nil, nil, 270)
+	window.pathInfo = "New project path:"
+	window.pathEntry = entry(nil, nil, 390)
+	window.createButton = Button("Create", function(bundle)
+		if bundle[2].nameEntry.text == "" or bundle[2].pathEntry.text == "" then
+			return
+		end
+		if bundle[1]:createProject(bundle[2].nameEntry.text, bundle[2].pathEntry.text) then
+			bundle[2].active = false
+		end
+	end, nil, nil, nil, 100, 20)
+	window.onClick = function(self, x, y, mousebutton)
+		if not self.active then
+			return
+		end
+		self.exitButton:onClick(x, y)
+		self.nameEntry:onClick(x, y)
+		self.pathEntry:onClick(x, y)
+		self.createButton:onClick(x, y)
+	end
+	window.keypressed = function(self, key)
+		if not self.active then
+			return
+		end
+		self.nameEntry:onKeyboardPress(key)
+		self.pathEntry:onKeyboardPress(key)
+	end
+
 	window.draw = function(self, mouseX, mouseY)
 		if not self.active then
 			return
 		end
 		self:bodyDraw(mouseX, mouseY)
-		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+		love.graphics.print(self.nameInfo, self.x + 5, self.y + self.titleHeight + 7)
+		self.nameEntry:draw(self.x + 125, self.y + self.titleHeight + 5, 2, 2)
+		love.graphics.print(self.pathInfo, self.x + 5, self.y + self.titleHeight + 35)
+		self.pathEntry:draw(self.x + 5, self.y + self.titleHeight + 55, 2, 2)
+		self.createButton:draw(self.x + 290, self.y + self.titleHeight + 170, mouseX, mouseY, 2, 2)
 	end
 	return window
 end

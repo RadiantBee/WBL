@@ -6,7 +6,9 @@ ui.mouseX = 0
 ui.mouseY = 0
 ui.mouseState = 0
 
-ui.load = function(self) end
+ui.load = function(self, filemanager)
+	ctxManager:load(filemanager)
+end
 
 ui.mousepressed = function(self, x, y, mouseButton)
 	ctxManager:mousepressed(x, y, mouseButton)
@@ -16,6 +18,11 @@ end
 
 ui.mousereleased = function(self, x, y, mouseButton)
 	self.mouseState = 0
+end
+
+ui.keypressed = function(self, key)
+	ctxManager:keypressed(key)
+	toolbar:keypressed(key)
 end
 
 ui.update = function(self, mouseX, mouseY)

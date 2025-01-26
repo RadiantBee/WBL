@@ -25,6 +25,10 @@ ctxManager[2].options[2].funcArgs = ctxManager.popups[4]
 
 ctxManager.active = nil
 
+ctxManager.load = function(self, filemanager)
+	self.popups[1].createButton.funcArgs = { filemanager, self.popups[1] }
+end
+
 ctxManager.manage = function(self, mouseX, mouseY, mousebutton)
 	if self.active and self[self.active]:outOfBounds(mouseX, mouseY) then
 		self.active = nil
@@ -33,6 +37,12 @@ ctxManager.manage = function(self, mouseX, mouseY, mousebutton)
 		if popup:checkMouseMove(mouseX, mouseY, mousebutton) then
 			break
 		end
+	end
+end
+
+ctxManager.keypressed = function(self, key)
+	for _, popup in ipairs(self.popups) do
+		popup:keypressed(key)
 	end
 end
 

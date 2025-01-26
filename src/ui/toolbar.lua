@@ -30,6 +30,9 @@ toolbar.options[6] =
 	Button("Git", toolbar.popups[5].toggleActive, toolbar.popups[5], 0, 0, toolbar.width, toolbar.height)
 toolbar.options[7] =
 	Button("HELP ME", toolbar.popups[1].toggleActive, toolbar.popups[1], 0, 0, toolbar.width, toolbar.height)
+
+toolbar.keypressed = function(self, key) end
+
 toolbar.draw = function(self, mouseX, mouseY)
 	love.graphics.setColor(0, 0, 0)
 	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), self.height)

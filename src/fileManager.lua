@@ -3,6 +3,17 @@ local fileManager = {}
 fileManager.workDir = nil
 fileManager.gitURL = nil
 fileManager.mainWBLI = nil
+fileManager.os = nil
+fileManager.pathDelimiter = nil
+fileManager.init = function(self)
+	self.os = love.system.getOS()
+	if self.os == "Linux" then
+		self.pathDelimiter = "/"
+	elseif self.os == "Windows" then
+		self.pathDelimiter = "\\"
+	end
+end
+
 --[[
 -- NOTE: ssh url?
 -- For newProject (if url was given):
@@ -12,8 +23,8 @@ fileManager.mainWBLI = nil
 --]]
 
 fileManager.createProject = function(self, name, path)
-	self.workDir = path .. "/" .. name
-	self.mainWBLI = self.workDir .. "/WBLI-" .. name .. ".AT"
+	self.workDir = path .. self.pathDelimiter .. name
+	self.mainWBLI = self.workDir .. self.pathDelimiter .. "WBLI-" .. name .. ".AT"
 	love.window.setTitle(self.workDir)
 	os.execute("mkdir " .. self.workDir)
 	local file = io.open(self.mainWBLI, "w")
@@ -21,12 +32,12 @@ fileManager.createProject = function(self, name, path)
 		error("ERROR: Cannot create the project file: " .. self.mainWBLI .. "\n")
 	end
 	file:close()
-	os.execute("mkdir " .. self.workDir .. "/pages")
-	os.execute("mkdir " .. self.workDir .. "/styles")
-	os.execute("mkdir " .. self.workDir .. "/images")
-	os.execute("mkdir " .. self.workDir .. "/videos")
-	os.execute("mkdir " .. self.workDir .. "/audio")
-	os.execute("mkdir " .. self.workDir .. "/scripts")
+	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "pages")
+	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "styles")
+	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "images")
+	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "videos")
+	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "audio")
+	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "scripts")
 	return true
 end
 

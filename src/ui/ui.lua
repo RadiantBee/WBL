@@ -8,6 +8,7 @@ ui.mouseState = 0
 
 ui.load = function(self, filemanager)
 	ctxManager:load(filemanager)
+	toolbar:load(filemanager)
 end
 
 ui.mousepressed = function(self, x, y, mouseButton)

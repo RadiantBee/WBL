@@ -126,15 +126,41 @@ function CreateNewFileWindow(x, y)
 end
 
 function CreateOpenFileWindow(x, y)
-	local window = EmptyDiaolgWindow(x, y, 200, 100)
+	local window = EmptyDiaolgWindow(x, y, 400, 300)
 	window.title = "Open Project"
-	window.info = ""
+	window.pathInfo = "Enter the path to the main WBLI file:"
+	window.pathEntry = entry(nil, nil, 390)
+	window.openButton = Button("Open", function(bundle)
+		if bundle[2].pathEntry.text == "" then
+			return
+		end
+		if bundle[1]:openProject(bundle[2].pathEntry.text) then
+			bundle[2].active = false
+		end
+	end, nil, nil, nil, 100, 20)
+
+	window.onClick = function(self, x, y, mousebutton)
+		if not self.active then
+			return
+		end
+		self.exitButton:onClick(x, y)
+		self.pathEntry:onClick(x, y)
+		self.openButton:onClick(x, y)
+	end
+	window.keypressed = function(self, key)
+		if not self.active then
+			return
+		end
+		self.pathEntry:onKeyboardPress(key)
+	end
 	window.draw = function(self, mouseX, mouseY)
 		if not self.active then
 			return
 		end
 		self:bodyDraw(mouseX, mouseY)
-		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
+		love.graphics.print(self.pathInfo, self.x + 5, self.y + self.titleHeight + 5)
+		self.pathEntry:draw(self.x + 5, self.y + self.titleHeight + 25, 2, 2)
+		self.openButton:draw(self.x + 290, self.y + self.titleHeight + 270, mouseX, mouseY, 2, 2)
 	end
 	return window
 end

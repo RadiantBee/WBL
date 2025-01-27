@@ -33,6 +33,29 @@ toolbar.options[7] =
 
 toolbar.keypressed = function(self, key) end
 
+toolbar.load = function(self, fileManager)
+	self.options[2].func = function(bundle)
+		if bundle[1]:save() then
+			bundle[2].colorIdle = { 0, 0.5, 0 }
+			bundle[2].modeIdle = "fill"
+		else
+			bundle[2].colorIdle = { 0.5, 0, 0 }
+			bundle[2].modeIdle = "fill"
+		end
+	end
+	self.options[2].funcArgs = { fileManager, self.options[2] }
+	self.options[2].onClick = function(self, mouseX, mouseY)
+		if (mouseX > self.x) and (mouseX < self.x + self.width) then
+			if (mouseY > self.y) and (mouseY < self.y + self.height) then
+				self:activate()
+				return
+			end
+		end
+		self.colorIdle = { 1, 1, 1 }
+		self.modeIdle = "line"
+	end
+end
+
 toolbar.draw = function(self, mouseX, mouseY)
 	love.graphics.setColor(0, 0, 0)
 	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), self.height)

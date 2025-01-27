@@ -25,4 +25,6 @@ function love.draw()
 	ui:draw()
 end
 
-function love.quit() end
+function love.quit()
+	fileManager:save()
+end

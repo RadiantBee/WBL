@@ -27,6 +27,7 @@ ctxManager.active = nil
 
 ctxManager.load = function(self, filemanager)
 	self.popups[1].createButton.funcArgs = { filemanager, self.popups[1] }
+	self.popups[2].openButton.funcArgs = { filemanager, self.popups[2] }
 end
 
 ctxManager.manage = function(self, mouseX, mouseY, mousebutton)

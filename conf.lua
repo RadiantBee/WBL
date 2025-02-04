@@ -1,5 +1,6 @@
 function love.conf(t)
 	t.title = "WBL: Web Builder with Lua"
-	t.window.width = 1920
-	t.window.height = 1080
+	t.window.resizable = true
+	t.window.width = 1280
+	t.window.height = 720
 end

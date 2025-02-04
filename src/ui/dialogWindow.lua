@@ -81,6 +81,7 @@ end
 
 function CreateNewFileWindow(x, y)
 	local window = EmptyDiaolgWindow(x, y, 400, 200)
+	window.active = true
 	window.title = "New Project"
 	window.nameInfo = "New project name:"
 	window.nameEntry = entry(nil, nil, 270)
@@ -127,6 +128,7 @@ end
 
 function CreateOpenFileWindow(x, y)
 	local window = EmptyDiaolgWindow(x, y, 400, 300)
+	window.active = true
 	window.title = "Open Project"
 	window.pathInfo = "Enter the path to the main WBLI file:"
 	window.pathEntry = entry(nil, nil, 390)
@@ -161,6 +163,20 @@ function CreateOpenFileWindow(x, y)
 		love.graphics.print(self.pathInfo, self.x + 5, self.y + self.titleHeight + 5)
 		self.pathEntry:draw(self.x + 5, self.y + self.titleHeight + 25, 2, 2)
 		self.openButton:draw(self.x + 290, self.y + self.titleHeight + 270, mouseX, mouseY, 2, 2)
+	end
+	return window
+end
+
+function CreateWarningWindow(x, y, warningText)
+	local window = EmptyDiaolgWindow(x, y, 200, 100)
+	window.title = "WARNING!!! Something isn't right..."
+	window.info = warningText
+	window.draw = function(self, mouseX, mouseY)
+		if not self.active then
+			return
+		end
+		self:bodyDraw(mouseX, mouseY)
+		love.graphics.print(self.info, self.x + 5, self.y + self.titleHeight + 5)
 	end
 	return window
 end

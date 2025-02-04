@@ -9,7 +9,7 @@ local function entry(x, y, width, height, onEnterFunc, onEnterFuncArgs)
 		height = height or 20,
 
 		onEnterFunc = onEnterFunc or function()
-			print("No onEnter function")
+			--print("No onEnter function")
 		end,
 
 		onEnterFuncArgs = onEnterFuncArgs,

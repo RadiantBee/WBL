@@ -4,10 +4,10 @@ require("src/ui/dialogWindow")
 local ctxManager = {}
 
 ctxManager.popups = {}
-ctxManager.popups[1] = CreateNewFileWindow(500, 500)
-ctxManager.popups[2] = CreateOpenFileWindow(1000, 500)
-ctxManager.popups[3] = CreateNewElementWindow(0, 100)
-ctxManager.popups[4] = CreateBackgroundSettings(0, 500)
+ctxManager.popups[1] = CreateNewFileWindow(300, 200)
+ctxManager.popups[2] = CreateOpenFileWindow(750, 200)
+ctxManager.popups[3] = CreateNewElementWindow(0, 300)
+ctxManager.popups[4] = CreateBackgroundSettings(0, 400)
 
 ctxManager[1] = FileToolbarMenu()
 ctxManager[1].options[1].func = ctxManager.popups[1].toggleActive

@@ -1,7 +1,8 @@
-local ui = require("src/ui/ui")
+local ui = require("src/ui")
 local fileManager = require("src/fileManager")
 
 function love.load()
+	love.window.maximize()
 	fileManager:init()
 	ui:load(fileManager)
 	love.graphics.setBackgroundColor(0, 0.5, 0)

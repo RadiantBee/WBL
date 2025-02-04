@@ -26,11 +26,12 @@ fileManager.createProject = function(self, name, path)
 	end
 	file:close()
 	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "pages")
-	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "styles")
+	--os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "styles")
 	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "images")
 	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "videos")
 	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "audio")
 	os.execute("mkdir " .. self.workDir .. self.pathDelimiter .. "scripts")
+	love.graphics.setBackgroundColor(1, 1, 1)
 	return true
 end
 
@@ -43,6 +44,7 @@ fileManager.openProject = function(self, projFile)
 	file:close()
 	self.mainWBLI = projFile
 	love.window.setTitle(self.mainWBLI)
+	love.graphics.setBackgroundColor(1, 1, 1)
 	return true
 end
 
@@ -51,10 +53,8 @@ fileManager.save = function(self)
 		local file = io.open(self.mainWBLI, "w")
 		file:write(self.workDir .. "\n")
 		file:close()
-		print("WBLI was successfuly saved")
 		return true
 	else
-		print("No main WBLI file located")
 		return false
 	end
 end

@@ -1,4 +1,4 @@
-![Meet_Webby](ico/wbl_webby.png)
+![Meet_Webby](ico/webby.png)
 # WBL
 ## What is it?
 An application for visually constructing a web-site (.html's, .css's and other stuff).
